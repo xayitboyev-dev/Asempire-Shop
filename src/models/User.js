@@ -35,7 +35,11 @@ const userSchema = new Schema({
             name: {
                 type: String,
                 required: true,
-            }
+            },
+            pubgId: {
+                type: Number,
+                default: true,
+            },
         }
     ]
 });

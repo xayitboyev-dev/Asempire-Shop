@@ -5,6 +5,7 @@ const stage = new Stage([
     require("../admin/scenes/sendMessage"),
     require("../admin/scenes/sendTo"),
     require("./main"),
+    require("./buy"),
 ]);
 
 module.exports = stage;
