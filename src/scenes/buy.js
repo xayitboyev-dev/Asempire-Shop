@@ -11,7 +11,7 @@ const file = require("../utils/file");
 
 scene.enter(async (ctx) => {
     try {
-        await ctx.replyWithHTML(`Hohlagancha uc sotib olishingiz mumkin. Ishonchi va xavfsiz!`, buy());
+        await ctx.replyWithHTML(`Tarifflardan birini tanlang`, buy());
     } catch (error) {
         console.log(error);
     };
@@ -97,7 +97,7 @@ scene.action(/^check_(.+)$/, async (ctx) => {
                     ctx.editMessageText(`✅ Pul to'ladingiz. Tez orada uc tashlab beramiz va xabar beramiz.`);
                     file.addTask({ chatId: ctx.from.id, id: transaction.id, count: transaction.count, pubgId: transaction.pubgId, status: "waiting" });
                 } else {
-                    ctx.answerCbQuery("❗️ To'lov qilinmagan.");
+                    ctx.answerCbQuery("❗️ To'lov qilinmagan.", { show_alert: true });
                 };
             } else throw "Not found";
         } else throw "Not found";

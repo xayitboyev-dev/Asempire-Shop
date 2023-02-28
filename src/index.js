@@ -7,6 +7,7 @@ bot.use(stage.middleware());
 require("./admin/index");
 bot.start(start);
 bot.on("message", (ctx) => ctx.scene.enter("main"));
+bot.use(start);
 
 async function startBot() {
     try {

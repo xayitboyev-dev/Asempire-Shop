@@ -12,7 +12,14 @@ setInterval(() => {
             parsedData.forEach((item, index) => {
                 if (item.status == "done") {
                     console.log(item.id, "is done");
-                    bot.telegram.sendMessage(item.chatId, `✅ Pubg hisobingizga ${item.count} UC tashlab berildi.`);
+                    bot.telegram.sendMessage(item.chatId, `✅ ${item.pubgId} id raqamli pubg hisobingizga ${item.count} UC tashlab berildi.`);
+                    parsedData.splice(index, 1);
+                    fs.writeFile(filePath, JSON.stringify(parsedData), "utf-8", (err) => {
+                        if (err) console.log(err);
+                    });
+                } else if (item.status == "error") {
+                    console.log(item.id, "is error");
+                    bot.telegram.sendMessage(item.chatId, `❌ Siz kiritgan ${item.pubgId} id raqamli pubg hisobingizga ${item.count} UC o'tkazilmadi. Adminlar bilan bog'lanib pulingizni qaytib olishingiz mumkin!`);
                     parsedData.splice(index, 1);
                     fs.writeFile(filePath, JSON.stringify(parsedData), "utf-8", (err) => {
                         if (err) console.log(err);

@@ -1,6 +1,6 @@
 {
     "MONGO_DB": "mongodb+srv://nodeuser:nodeuser@cluster.8zycolv.mongodb.net/dev",
-    "BOT_TOKEN": "5444372708:AAG5oxE3SqMvSBBwaupoK56B1QrZYDZquhM",
+    "BOT_TOKEN": "5760436799:AAGlix0EEP5bDbxO_LIaOkBvfleuS7XYMqo",
     "PAYME_API": "https://payme.uz/api",
     "CHECKOUT_PAYME": "https://checkout.payme.uz/",
     "CARDS": [
