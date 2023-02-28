@@ -1,7 +1,7 @@
 {
   "name": "transbot",
   "version": "1.0.0",
-  "description": "TransFreBot official sources code",
+  "description": "UC Shop official sources code",
   "main": "index.js",
   "scripts": {
     "start": "node ./src/index.js",
