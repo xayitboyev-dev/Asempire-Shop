@@ -94,7 +94,7 @@ scene.action(/^check_(.+)$/, async (ctx) => {
                     }
                 })
                 if (data?.result?.cheque?.pay_time > 0) {
-                    ctx.editMessageText(`✅ Pul to'ladingiz. Tez orada uc tashlab beramiz va xabar beramiz.`);
+                    ctx.editMessageText(`✅ Pul to'ladingiz. Tez orada uc tashlab beramiz va xabar beramiz. Hisobingizga UC tushmagan hollarda admin bilan bog'laning.`);
                     file.addTask({ chatId: ctx.from.id, id: transaction.id, count: transaction.count, pubgId: transaction.pubgId, status: "waiting" });
                 } else {
                     ctx.answerCbQuery("❗️ To'lov qilinmagan.", { show_alert: true });
