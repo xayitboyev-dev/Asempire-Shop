@@ -15,18 +15,6 @@
             "count": 60,
             "price": 100000,
             "priceName": "10.000"
-        },
-        {
-            "name": "120 UC - 20.000 UZS",
-            "count": 120,
-            "price": 2000000,
-            "priceName": "20.000"
-        },
-        {
-            "name": "300 UC - 35.000 UZS",
-            "count": 300,
-            "price": 3500000,
-            "priceName": "35.000"
         }
     ]
 }
