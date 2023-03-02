@@ -1,17 +1,15 @@
 {
     "MONGO_DB": "mongodb+srv://nodeuser:nodeuser@cluster.8zycolv.mongodb.net/dev",
-    "BOT_TOKEN": "5760436799:AAGlix0EEP5bDbxO_LIaOkBvfleuS7XYMqo",
+    "BOT_TOKEN": "6236179639:AAFjOgaPeVtHFynaMy0WRKdMIrp0QQakaVE",
     "PAYME_API": "https://payme.uz/api",
     "CHECKOUT_PAYME": "https://checkout.payme.uz/",
     "CARDS": [
-        "63f64449f9b3d2b5a88c17b8",
-        "63f64430f9b3d2b5a889581e",
-        "63f64420f9b3d2b5a8879d64",
-        "63c26b28f9b3d2b5a8f04717"
+        "63447d54cad1c751637e9a99",
+        "6347fd67cad1c75163c547e5"
     ],
     "TARIFF": [
         {
-            "name": "60 UC - 10.000 UZS",
+            "name": "🔥60 UC - 10.000 UZS🔥",
             "count": 60,
             "price": 1000000,
             "priceName": "10.000"

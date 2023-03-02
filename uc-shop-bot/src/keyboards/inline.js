@@ -1,7 +1,7 @@
 const { Markup } = require("telegraf");
 
 exports.review = (tariff) => Markup.inlineKeyboard([
-    Markup.button.callback("Sotib olish - " + tariff.priceName, "buy_" + tariff.count + " UZS")
+    Markup.button.callback("Sotib olish - " + tariff.priceName + " UZS", "buy_" + tariff.count)
 ]).resize();
 
 exports.payment = (transaction) => Markup.inlineKeyboard([
