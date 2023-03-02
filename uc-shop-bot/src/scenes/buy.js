@@ -34,7 +34,7 @@ scene.on("text", async (ctx) => {
         const { text } = ctx.message;
         const tariff = TARIFF.find((item) => item.name === text);
         if (tariff) {
-            await ctx.reply(`Tarif: ${tariff.name}\nUC soni: ${tariff.count}\nNarxi: ${tariff.priceName}\nPubg id: ${ctx.session.pubgId}`, review(tariff));
+            await ctx.reply(`Tarif: ${tariff.name}\nUC soni: ${tariff.count}\nNarxi: ${tariff.priceName} UZS\nPubg id: ${ctx.session.pubgId}`, review(tariff));
         } else {
             await ctx.reply("Bunday tarif mavjud emas!");
         };
@@ -55,7 +55,7 @@ scene.action(/^buy_(.+)$/, async (ctx) => {
                     const user = await User.findOne({ uid: ctx.from.id });
                     user.transactions.push({ name: tariff.name, count: tariff.count, tid, pubgId: +ctx.session.pubgId });
                     await user.save();
-                    await ctx.editMessageText(`Tarif: ${tariff.name}\nUC soni: ${tariff.count}\nNarxi: ${tariff.priceName}\nPubg id: ${ctx.session.pubgId}\n\nTo'lov qilinishi kutilmoqda.`, payment({
+                    await ctx.editMessageText(`Tarif: ${tariff.name}\nUC soni: ${tariff.count}\nNarxi: ${tariff.priceName} UZS\nPubg id: ${ctx.session.pubgId}\n\nTo'lov qilinishi kutilmoqda.`, payment({
                         url: CHECKOUT_PAYME + tid,
                         tid
                     }));
