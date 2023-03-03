@@ -22,6 +22,9 @@ const userSchema = new Schema({
         type: String,
         default: 'user'
     },
+    idHistory: [
+        { type: Number }
+    ],
     transactions: [
         {
             tid: {

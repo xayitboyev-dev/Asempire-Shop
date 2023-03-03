@@ -8,23 +8,13 @@ exports.main = Markup.keyboard([
 exports.remove = Markup.removeKeyboard();
 
 exports.buy = () => {
-    let extra = [];
-    let row = [];
-    let count = 0;
+    let extra = TARIFF.map((item) => [item.name]);
+    extra.push(["◀️ Ortga qaytish"]);
+    return Markup.keyboard(extra).resize();
+};
 
-    TARIFF.forEach((item, idx) => {
-        row.push(item.name);
-        if (count >= 1 || idx === TARIFF.length - 1) {
-            extra.push(row);
-            row = [];
-            count = 0;
-            return;
-        };
-        count++;
-    });
-
-    extra.push(["◀️ Ortga qaytish"])
-
+exports.idHistory = (ids) => {
+    let extra = ids.map((item) => [item.toString()]);
     return Markup.keyboard(extra).resize();
 };
 
