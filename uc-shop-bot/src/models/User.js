@@ -23,10 +23,18 @@ const userSchema = new Schema({
         default: 'user'
     },
     idHistory: [
-        { type: Number }
+        { type: Number, required: true }
     ],
     transactions: [
         {
+            payBy: {
+                type: String,
+                required: true
+            },
+            uuid: {
+                type: String,
+                required: true
+            },
             tid: {
                 type: String,
                 required: true

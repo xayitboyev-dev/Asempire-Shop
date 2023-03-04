@@ -23,7 +23,7 @@ module.exports = async function (price) {
                     }
                 });
                 if (response?.data?.error?.reason == "p2p_daily_transaction_limit") pay();
-                else resolve(response.data);
+                else resolve(response.data?.result?.cheque?._id);
             };
             pay();
         } catch (error) {
