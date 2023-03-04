@@ -2,6 +2,7 @@ const { UZUMBANK_API } = require("../config/config.json");
 const axios = require("axios");
 const fs = require("fs");
 const path = require("path");
+const proxy = require("../config/proxy.json");
 
 module.exports = (price) => {
     return new Promise((resolve, reject) => {
@@ -26,7 +27,7 @@ module.exports = (price) => {
                         "title": "pubg 60 uc | @LuxUcShopBot",
                         "totalAmount": price,
                         "type": "RECEIVER"
-                    }, { headers: uzumConfig });
+                    }, { headers: uzumConfig, proxy });
                     if (respone?.data?.errorMessage?.length) throw respone?.data?.errorMessage;
                     else {
                         const payUrl = respone.data?.data?.expressUrl;

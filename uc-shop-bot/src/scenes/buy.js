@@ -12,6 +12,7 @@ const file = require("../utils/file");
 const fs = require("fs");
 const path = require("path");
 const { v4 } = require("uuid");
+const proxy = require("../config/proxy.json");
 
 scene.enter(async (ctx) => {
     try {
@@ -114,13 +115,13 @@ scene.action(/^check_(.+)$/, async (ctx) => {
                             if (err) ctxError();
                             else {
                                 const uzumConfig = JSON.parse(data);
-                                const response = await axios.get(UZUMBANK_API + transaction.tid, { headers: uzumConfig });
+                                const response = await axios.get(UZUMBANK_API + transaction.tid, { headers: uzumConfig, proxy });
                                 console.log(response.data);
                                 if (response.data?.data?.expressStatus == "ACTIVE") ctxError();
                             };
                         } catch (error) {
                             console.log(error);
-                            if (error.data?.data?.expressStatus != "ACTIVE") success();
+                            if (error.response?.data?.data?.expressStatus != "ACTIVE") success();
                             ctxError();
                         };
                     })
