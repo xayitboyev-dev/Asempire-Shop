@@ -2,7 +2,7 @@
     "MONGO_DB": "mongodb+srv://nodeuser:nodeuser@cluster.8zycolv.mongodb.net/dev",
     "BOT_TOKEN": "5444372708:AAG5oxE3SqMvSBBwaupoK56B1QrZYDZquhM",
     "PAYME_API": "https://payme.uz/api",
-    "CHECKOUT_PAYME": "https://checkout.payme.uz/",
+    "CHECKOUT_PAYME": "https://checkout.paycom.uz/",
     "UZUMBANK_API": "https://mobile.apelsin.uz/api/express/",
     "CHECKOUT_UZUM": "https://www.apelsin.uz/express?code=",
     "CARDS": [

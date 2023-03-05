@@ -6,7 +6,7 @@ const path = require("path");
 const fs = require("fs");
 
 scene.enter(async (ctx) => {
-    fs.readFile(path.join(__dirname, "..", "..", "..", "text2.json"), "utf-8", async (err, data) => {
+    fs.readFile(path.join(__dirname, "..", "..", "..", "test2.json"), "utf-8", async (err, data) => {
         let history = [];
         try {
             if (err) {
