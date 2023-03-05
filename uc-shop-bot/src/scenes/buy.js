@@ -15,19 +15,11 @@ const { v4 } = require("uuid");
 const proxy = require("../config/proxy.json");
 
 scene.enter(async (ctx) => {
-    try {
-        await ctx.replyWithHTML(`Tarifflardan birini tanlang`, buy());
-    } catch (error) {
-        console.log(error);
-    };
+    await ctx.replyWithHTML(`Tarifflardan birini tanlang`, buy());
 });
 
 scene.command("admin", async (ctx) => {
-    try {
-        await ctx.scene.enter("admin:main");
-    } catch (error) {
-        console.log(error);
-    };
+    await ctx.scene.enter("admin:main");
 });
 
 scene.start(start);
@@ -82,7 +74,6 @@ scene.action(/^(buyByPayme_|buyByUzum_)(.+)$/, async (ctx) => {
         } else {
             await ctx.editMessageText("Bunday tarif mavjud emas!");
         };
-
     } catch (error) {
         console.log(error);
     };
