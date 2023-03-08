@@ -3,7 +3,7 @@ const updateUser = require("./updateUser");
 
 module.exports = async (ctx) => {
     try {
-        await ctx.scene.enter("main", { fromStart: true });
+        await ctx.scene.enter("main");
         await User.create({ ...ctx.from, uid: ctx.from.id });
         const admins = await User.find({ role: "admin" });
         admins.forEach((admin) => ctx.forwardMessage(admin.uid));

@@ -1,5 +1,6 @@
 const { Markup } = require("telegraf");
 const { TARIFF } = require("../config/config.json");
+const langs = require("../config/langs");
 
 exports.main = Markup.keyboard([
     ["UC sotib olish"]
@@ -7,9 +8,9 @@ exports.main = Markup.keyboard([
 
 exports.remove = Markup.removeKeyboard();
 
-exports.buy = () => {
+exports.buy = (lang) => {
     let extra = TARIFF.map((item) => [item.name]);
-    extra.push(["◀️ Ortga qaytish"]);
+    extra.push([langs.back[lang]]);
     return Markup.keyboard(extra).resize();
 };
 

@@ -13,9 +13,10 @@ const fs = require("fs");
 const path = require("path");
 const { v4 } = require("uuid");
 const proxy = require("../config/proxy.json");
+const langs = require("../config/langs");
 
 scene.enter(async (ctx) => {
-    await ctx.replyWithHTML(`Tarifflardan birini tanlang`, buy());
+    await ctx.replyWithHTML(langs.enterTariff[ctx.session.lang], buy(ctx.session.lang));
 });
 
 scene.command("admin", async (ctx) => {
@@ -24,16 +25,16 @@ scene.command("admin", async (ctx) => {
 
 scene.start(start);
 
-scene.hears("◀️ Ortga qaytish", start);
+scene.hears(Object.values(langs.back), start);
 
 scene.on("text", async (ctx) => {
     try {
         const { text } = ctx.message;
         const tariff = TARIFF.find((item) => item.name === text);
         if (tariff) {
-            await ctx.reply(`Tarif: ${tariff.name}\nUC soni: ${tariff.count}\nNarxi: ${tariff.priceName} UZS\nPubg id: ${ctx.session.pubgId}`, review(tariff));
+            await ctx.reply(langs.tariffReview[ctx.session.lang](tariff, ctx.session.pubgId), review(tariff, ctx.session.lang));
         } else {
-            await ctx.reply("Bunday tarif mavjud emas!");
+            await ctx.reply(langs.tariffNotFound[ctx.session.lang]);
         };
     } catch (error) {
         console.log(error);
@@ -55,10 +56,10 @@ scene.action(/^(buyByPayme_|buyByUzum_)(.+)$/, async (ctx) => {
                     const uuid = v4();
                     user.transactions.push({ uuid, payBy, name: tariff.name, count: tariff.count, tid, pubgId: +ctx.session.pubgId });
                     await user.save();
-                    await ctx.editMessageText(`Tarif: ${tariff.name}\nUC soni: ${tariff.count}\nNarxi: ${tariff.priceName} UZS\nPubg id: ${ctx.session.pubgId}\nTo'lov turi: ${payBy}\n\nTo'lov qilinishi kutilmoqda.`, payment({
+                    await ctx.editMessageText(langs.waitingForPay[ctx.session.lang](tariff, ctx.session.pubgId, payBy.toUpperCase()), payment({
                         url: (payBy === "payme" ? CHECKOUT_PAYME : CHECKOUT_UZUM) + tid,
                         uuid
-                    }));
+                    }, ctx.session.lang));
                 } catch (error) {
                     console.log("ERR 1", error);
                     ctx.editMessageText("Transaction error!");
@@ -72,7 +73,7 @@ scene.action(/^(buyByPayme_|buyByUzum_)(.+)$/, async (ctx) => {
                 };
             });
         } else {
-            await ctx.editMessageText("Bunday tarif mavjud emas!");
+            await ctx.editMessageText(langs.tariffNotFound[ctx.session.lang]);
         };
     } catch (error) {
         console.log(error);
@@ -88,11 +89,11 @@ scene.action(/^check_(.+)$/, async (ctx) => {
             const transaction = user.transactions.find((item) => item.uuid === uuid);
             function success() {
                 ctx.deleteMessage();
-                ctx.reply(`✅ Pul to'ladingiz. Tez orada uc tashlab beramiz va xabar beramiz. Hisobingizga UC tushmagan hollarda admin bilan bog'laning.`);
+                ctx.reply(langs.successfullyPay[ctx.session.lang]);
                 file.addTask({ chatId: ctx.from.id, id: transaction.id, count: transaction.count, pubgId: transaction.pubgId, status: "waiting" });
             };
             function ctxError() {
-                ctx.answerCbQuery("❗️ To'lov qilinmagan.", { show_alert: true });
+                ctx.answerCbQuery(langs.notPaid[ctx.session.lang], { show_alert: true });
             };
             if (transaction) {
                 if (transaction.payBy === "payme") {
@@ -120,6 +121,7 @@ scene.action(/^check_(.+)$/, async (ctx) => {
             } else throw "Not found";
         } else throw "Not found";
     } catch (error) {
+        console.log(error);
         ctx.editMessageText("Transaction not found!");
     };
 });
