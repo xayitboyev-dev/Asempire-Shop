@@ -16,6 +16,14 @@ scene.hears("👤 Userga xabar", async (ctx) => {
     await ctx.scene.enter('admin:sendTo');
 });
 
+scene.hears("🗂 Catalog", async (ctx) => {
+    await ctx.scene.enter('admin:catalog');
+});
+
+scene.hears("🛍 Products", async (ctx) => {
+    await ctx.scene.enter('admin:products');
+});
+
 scene.hears("📊 Statistika", async (ctx) => {
     const activeUsers = await User.find({ isActive: true });
     const nonActiveUsers = await User.find({ isActive: null || false });
