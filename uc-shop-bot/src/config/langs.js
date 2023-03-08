@@ -58,5 +58,13 @@ module.exports = {
     "check": {
         "uz": "To'lov qildim ✅",
         "ru": "Я заплатил ✅"
+    },
+    "buyUc": {
+        "uz": "💵 UC sotib olish",
+        "ru": "💵 Купить UC",
+    },
+    "changeLang": {
+        "uz": "⚙️ Tilni o'zgartirish",
+        "ru": "⚙️ Изменить язык",
     }
 };

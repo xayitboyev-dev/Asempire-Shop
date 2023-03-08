@@ -14,5 +14,5 @@ exports.payment = (transaction, lang) => {
 };
 
 exports.lang = Markup.inlineKeyboard([
-    Markup.button.callback("UZBEK", "lang_uz"), Markup.button.callback("RUSSIAN", "lang_ru")
+    Markup.button.callback("🇺🇿 UZBEK", "lang_uz"), Markup.button.callback("🇷🇺 RUSSIAN", "lang_ru")
 ]);
