@@ -5,7 +5,7 @@ const langs = require("../config/langs");
 exports.main = (lang) => Markup.keyboard([
     [langs.buyUc[lang]],
     [langs.changeLang[lang]],
-]);
+]).resize();
 
 exports.remove = Markup.removeKeyboard();
 
@@ -15,8 +15,9 @@ exports.buy = (lang) => {
     return Markup.keyboard(extra).resize();
 };
 
-exports.idHistory = (ids) => {
+exports.idHistory = (ids, lang) => {
     let extra = ids.map((item) => [item.toString()]);
+    extra.push([langs.back[lang]]);
     return Markup.keyboard(extra).resize();
 };
 

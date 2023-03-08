@@ -1,11 +1,10 @@
 const { Scenes: { BaseScene } } = require('telegraf');
 const scene = new BaseScene('enterPubgId');
 const { idHistory, remove } = require("../keyboards/keyboard");
-const { Input } = require("telegraf");
 const start = require("../utils/start");
-const path = require("path");
-const fs = require("fs");
 const langs = require("../config/langs");
+const fs = require("fs");
+const path = require("path");
 
 scene.enter(async (ctx) => {
     fs.readFile(path.join(__dirname, "..", "..", "..", "test2.json"), "utf-8", async (err, data) => {
@@ -21,12 +20,13 @@ scene.enter(async (ctx) => {
         } catch (error) {
             console.log(error);
         };
-        await ctx.replyWithPhoto(Input.fromLocalFile(path.join(__dirname, "..", "assets", "logo.png"), "logo"), { caption: langs.welcome[ctx.session.lang] });
-        await ctx.reply(langs.askPubdId[ctx.session.lang], history.length ? idHistory(history.reverse()) : remove);
+        await ctx.reply(langs.askPubdId[ctx.session.lang], history.length ? idHistory(history.reverse(), ctx.session.lang) : remove);
     });
 });
 
 scene.start(start);
+
+scene.hears(Object.values(langs.back), (ctx) => ctx.scene.enter("main"));
 
 scene.on("text", async (ctx) => {
     try {
