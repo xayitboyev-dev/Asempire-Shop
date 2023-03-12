@@ -5,7 +5,7 @@ const auth = require("../middlewares/auth");
 const User = require("../../models/User");
 
 scene.enter(auth, async (ctx) => {
-    await ctx.reply('🔝 Asosiy menyudasiz', main);
+    await ctx.reply('🔝 Admin paneldasiz', main);
 });
 
 scene.hears("📤 Xabar tarqatish", async (ctx) => {

@@ -6,14 +6,15 @@ exports.main = Markup.keyboard([
     ["👤 Userga xabar"]
 ]).resize();
 
-exports.catalog = (categories) => {
+exports.catalog = (categories, catalog) => {
     let extra = categories.map((item) => [item.name]);
-    extra.push(["➕ Qo'shish", "◀️ Orqaga"]);
+    if (catalog) extra.push(["➕ Qo'shish", "◀️ Orqaga"]);
+    else extra.push(["◀️ Orqaga"]);
     return Markup.keyboard(extra).resize();
 };
 
 exports.catalogReview = Markup.keyboard([
-    ["❌ O'chirish"]
+    ["❌ O'chirish", "◀️ Orqaga"]
 ]).resize();
 
 exports.cancel = Markup.keyboard([

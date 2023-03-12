@@ -8,6 +8,7 @@ bot.use(stage.middleware());
 bot.use(langMiddleware);
 require("./admin/index");
 bot.start(start);
+bot.command("language", (ctx) => ctx.scene.enter("lang"));
 bot.on("message", (ctx) => ctx.scene.enter("main"));
 bot.use(start);
 

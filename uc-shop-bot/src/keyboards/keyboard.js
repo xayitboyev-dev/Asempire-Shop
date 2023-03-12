@@ -2,10 +2,12 @@ const { Markup } = require("telegraf");
 const { TARIFF } = require("../config/config.json");
 const langs = require("../config/langs");
 
-exports.main = (lang) => Markup.keyboard([
-    [langs.buyUc[lang]],
-    [langs.changeLang[lang]],
-]).resize();
+exports.main = (categories, lang) => {
+    const extra = categories.map((item) => [item.name]);
+    extra.unshift([langs.buyUc[lang]]);
+    // extra.push([langs.changeLang[lang]]);
+    return Markup.keyboard(extra).resize();
+}
 
 exports.remove = Markup.removeKeyboard();
 

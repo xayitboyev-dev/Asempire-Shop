@@ -66,5 +66,9 @@ module.exports = {
     "changeLang": {
         "uz": "⚙️ Tilni o'zgartirish",
         "ru": "⚙️ Изменить язык",
+    },
+    "mainMenu": {
+        "uz": "🔝 Asosiy menyu",
+        "ru": "🔝 Главное меню",
     }
 };
