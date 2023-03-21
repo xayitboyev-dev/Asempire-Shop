@@ -2,8 +2,8 @@ const getStringPrice = require("../utils/getStringPrice");
 
 module.exports = {
     "welcome": {
-        "uz": "⚡️Lux UC Shop - O'zbekistondagi birinchi avtomatlashtirilgan eng arzon, tezkor va sifatli servis!\n\n🤖 @asempire_shop_bot",
-        "ru": "⚡️Lux UC Shop - первый автоматизированный дешевый, быстрый и качественный сервис в Узбекистане!\n\n🤖 @asempire_shop_bot"
+        "uz": "⚡️ ASEMPIRE SHOP - O'zbekistondagi birinchi avtomatlashtirilgan eng arzon, tezkor va sifatli servis!\n\n🤖 @asempire_shop_bot",
+        "ru": "⚡️ ASEMPIRE SHOP - первый автоматизированный дешевый, быстрый и качественный сервис в Узбекистане!\n\n🤖 @asempire_shop_bot"
     },
     "askPubdId": {
         "uz": "Pubg ID raqamingizni kiriting:",
@@ -20,6 +20,18 @@ module.exports = {
     "idErrorInvalid": {
         "uz": "❗️ ID ni to'g'ri kiriting!",
         "ru": "❗️ Введите свой ID правильно!"
+    },
+    "productsNotAvailable": {
+        "uz": "Hozircha ushbu kategoriyada mahsulotlar mavjud emas!",
+        "ru": "В настоящее время в этой категории нет товаров!"
+    },
+    "payTypeError": {
+        "uz": "❗️ Ushbu to'lov tizimi vaqtinchalik ishlamayapti. Boshqa to'lov tizimidan foydalanishingiz mumkin!",
+        "ru": "❗️ Данная платежная система временно недоступна. Вы можете использовать другую платежную систему!"
+    },
+    "categoryNotFound": {
+        "uz": "Kategoriya topilmadi!",
+        "ru": "Категория не найдена!"
     },
     "enterTariff": {
         "uz": "Tarifflardan birini tanlang:",
@@ -78,8 +90,8 @@ module.exports = {
         "ru": "Я заплатил ✅"
     },
     "buyUc": {
-        "uz": "💵 UC sotib olish",
-        "ru": "💵 Купить UC",
+        "uz": "🎮 PUBG MOBILE UC 🎮",   
+        "ru": "🎮 PUBG MOBILE UC 🎮",
     },
     "changeLang": {
         "uz": "⚙️ Tilni o'zgartirish",

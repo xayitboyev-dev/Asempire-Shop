@@ -3,13 +3,21 @@ const scene = new BaseScene('lang');
 const { lang } = require("../keyboards/inline");
 
 scene.enter(async (ctx) => {
-    await ctx.reply("🇺🇿 Tilni tanlang\n🇷🇺 Выберите язык", lang);
+    try {
+        await ctx.reply("🇺🇿 Tilni tanlang\n🇷🇺 Выберите язык", lang);
+    } catch (error) {
+        console.log(error);
+    }
 });
 
 scene.action(/^lang_(.+)$/, async (ctx) => {
-    ctx.session.lang = ctx.match[1];
-    ctx.deleteMessage();
-    ctx.scene.enter("main");
+    try {
+        ctx.session.lang = ctx.match[1];
+        await ctx.deleteMessage();
+        ctx.scene.enter("main");
+    } catch (error) {
+        console.log(error);
+    };
 });
 
 module.exports = scene; 

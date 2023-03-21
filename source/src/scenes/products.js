@@ -13,8 +13,12 @@ const { v4 } = require("uuid");
 const checkUzum = require('../utils/checkUzum');
 
 scene.enter(async (ctx) => {
-    const products = await Product.find({ category: ctx.scene?.state?.category });
-    await ctx.reply(langs.products[ctx.session.lang], catalog(products, false, ctx.session.lang));
+    try {
+        const products = await Product.find({ category: ctx.scene?.state?.category });
+        await ctx.reply(langs.products[ctx.session.lang], catalog(products, false, ctx.session.lang));
+    } catch (error) {
+        console.log(error);
+    };
 });
 
 scene.hears(Object.values(langs.back), (ctx) => ctx.scene.enter("main"));
@@ -46,7 +50,7 @@ scene.action(/^(buyByPayme_|buyByUzum_)(.+)$/, async (ctx) => {
                 };
             }).catch((error) => {
                 console.log("ERR 2", error);
-                ctx.editMessageText("❗️ Bu to'lov tizimi vaqtinchalik ishlamayapti. Boshqa to'lov tizimidan foydalanishingiz mumkin!");
+                ctx.editMessageText(langs.payTypeError[ctx.session.lang]);
             });
         } else {
             await ctx.editMessageText(langs.tariffNotFound[ctx.session.lang]);
@@ -79,7 +83,6 @@ scene.action(/^check_(.+)$/, async (ctx) => {
             async function ctxError() {
                 await ctx.answerCbQuery(langs.notPaid[ctx.session.lang], { show_alert: true });
             };
-            return success();
             if (transaction) {
                 if (transaction.payBy === "payme") {
                     const response = await axios.post(PAYME_API, { method: "cheque.get", params: { id: transaction.tid } });
@@ -104,10 +107,6 @@ scene.on("text", async (ctx) => {
     } else {
         await ctx.reply("Product topilmadi!");
     };
-});
-
-scene.action((ctx) => {
-    console.log(ctx);
 });
 
 module.exports = scene;

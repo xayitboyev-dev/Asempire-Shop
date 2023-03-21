@@ -4,11 +4,14 @@ const { catalog } = require('../keyboards/keyboard');
 const auth = require("../middlewares/auth");
 const Product = require("../../models/Product");
 const langs = require('../../config/langs');
+const start = require("../../utils/start");
 
 scene.enter(auth, async (ctx) => {
     const products = await Product.find({ category: ctx.scene.state.category });
     await ctx.reply('Products:', catalog(products, true, ctx.session.lang));
 });
+
+scene.start(start);
 
 scene.hears("➕ Qo'shish", (ctx) => ctx.scene.enter("admin:products:add", { category: ctx.scene.state.category }));
 

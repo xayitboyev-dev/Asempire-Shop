@@ -5,8 +5,10 @@ const path = require("path");
 const langs = require("../config/langs");
 const { main } = require("../keyboards/keyboard");
 const Category = require("../models/Category");
+const Product = require("../models/Product");
 const User = require("../models/User");
 const updateUser = require("../utils/updateUser");
+const start = require("../utils/start");
 
 scene.enter(async (ctx) => {
     try {
@@ -18,10 +20,16 @@ scene.enter(async (ctx) => {
         if (error.code == 11000) updateUser(ctx.from.id, { ...ctx.from, uid: ctx.from.id });
     };
 
-    const categories = await Category.find();
-    await ctx.replyWithPhoto(Input.fromLocalFile(path.join(__dirname, "..", "assets", "logo.png"), "logo"), { caption: langs.welcome[ctx.session.lang] });
-    await ctx.reply(langs.mainMenu[ctx.session.lang], main(categories, ctx.session.lang));
+    try {
+        const categories = await Category.find();
+        await ctx.replyWithPhoto(Input.fromLocalFile(path.join(__dirname, "..", "assets", "logo.png"), "logo"), { caption: langs.welcome[ctx.session.lang] });
+        await ctx.reply(langs.mainMenu[ctx.session.lang], main(categories, ctx.session.lang));
+    } catch (error) {
+        console.log(error);
+    };
 });
+
+scene.start(start);
 
 scene.command("language", (ctx) => ctx.scene.enter("lang"));
 
@@ -30,12 +38,22 @@ scene.command("/admin", (ctx) => ctx.scene.enter("admin:main"));
 scene.hears(Object.values(langs.buyUc), (ctx) => ctx.scene.enter("enterPubgId"));
 
 scene.on("text", async (ctx) => {
-    const name = ctx.message?.text;
-    const category = await Category.findOne({ name });
-    if (category) {
-        ctx.scene.enter("products", { category: category.name });
-    } else {
-        await ctx.reply("Kategoriya topilmadi!");
+    try {
+        const name = ctx.message?.text;
+        const category = await Category.findOne({ name });
+        const products = await Product.find({ category: category?.name });
+
+        if (category) {
+            if (products.length) {
+                ctx.scene.enter("products", { category: category.name });
+            } else {
+                await ctx.reply(langs.productsNotAvailable[ctx.session.lang]);
+            };
+        } else {
+            await ctx.reply(langs.categoryNotFound[ctx.session.lang]);
+        };
+    } catch (error) {
+        console.log(error);
     };
 });
 

@@ -5,6 +5,7 @@ const start = require("../utils/start");
 const langs = require("../config/langs");
 const fs = require("fs");
 const path = require("path");
+const { Input } = require("telegraf");
 
 scene.enter(async (ctx) => {
     fs.readFile(path.join(__dirname, "..", "..", "..", "test2.json"), "utf-8", async (err, data) => {
@@ -20,7 +21,12 @@ scene.enter(async (ctx) => {
         } catch (error) {
             console.log(error);
         };
-        await ctx.reply(langs.askPubdId[ctx.session.lang], history.length ? idHistory(history.reverse(), ctx.session.lang) : remove);
+        try {
+            await ctx.replyWithPhoto(Input.fromLocalFile(path.join(__dirname, "..", "assets", "uc.jpg"), "uc_logo"), { caption: langs.welcome[ctx.session.lang] });
+            await ctx.reply(langs.askPubdId[ctx.session.lang], history.length ? idHistory(history.reverse(), ctx.session.lang) : remove);
+        } catch (error) {
+            console.log(error);
+        }
     });
 });
 
@@ -31,7 +37,6 @@ scene.hears(Object.values(langs.back), (ctx) => ctx.scene.enter("main"));
 scene.on("text", async (ctx) => {
     try {
         const id = parseInt(ctx.message.text);
-
         if (id) {
             if (id.toString().length > 20) return await ctx.reply(langs.idErrorMaxLength[ctx.session.lang]);
             if (id.toString().length < 6) return await ctx.reply(langs.idErrorMinLength[ctx.session.lang]);

@@ -12,9 +12,15 @@ const file = require("../utils/file");
 const { v4 } = require("uuid");
 const langs = require("../config/langs");
 const checkUzum = require('../utils/checkUzum');
+const { Input } = require("telegraf");
+const path = require("path");
 
 scene.enter(async (ctx) => {
-    await ctx.replyWithHTML(langs.enterTariff[ctx.session.lang], buy(ctx.session.lang));
+    try {
+        await ctx.replyWithHTML(langs.enterTariff[ctx.session.lang], buy(ctx.session.lang));
+    } catch (error) {
+        console.log(error);
+    };
 });
 
 scene.command("/admin", (ctx) => ctx.scene.enter("admin:main"));
@@ -30,7 +36,7 @@ scene.on("text", async (ctx) => {
         const { text } = ctx.message;
         const tariff = TARIFF.find((item) => item.name === text);
         if (tariff) {
-            await ctx.reply(langs.tariffReview[ctx.session.lang](tariff, ctx.session.pubgId), review(tariff.count, ctx.session.lang));
+            await ctx.replyWithPhoto(Input.fromLocalFile(path.join(__dirname, "..", "assets", "uc.jpg"), "uc_logo"), { caption: langs.tariffReview[ctx.session.lang](tariff, ctx.session.pubgId), reply_markup: { inline_keyboard: review(tariff.count, ctx.session.lang), resize_keyboard: true }, });
         } else {
             await ctx.reply(langs.tariffNotFound[ctx.session.lang]);
         };
@@ -54,20 +60,32 @@ scene.action(/^(buyByPayme_|buyByUzum_)(.+)$/, async (ctx) => {
                     const uuid = v4();
                     user.transactions.push({ uuid, payBy, name: tariff.name, count: tariff.count, tid, pubgId: +ctx.session.pubgId });
                     await user.save();
-                    await ctx.editMessageText(langs.waitingForPay[ctx.session.lang](tariff, ctx.session.pubgId, payBy.toUpperCase()), payment({
+                    await ctx.editMessageCaption(langs.waitingForPay[ctx.session.lang](tariff, ctx.session.pubgId, payBy.toUpperCase()), payment({
                         url: (payBy === "payme" ? CHECKOUT_PAYME : CHECKOUT_UZUM) + tid,
                         uuid
                     }, ctx.session.lang));
                 } catch (error) {
                     console.log("ERR 1", error);
-                    ctx.editMessageText(error);
+                    try {
+                        await ctx.editMessageCaption(error);
+                    } catch (error) {
+                        console.log(error);
+                    };
                 };
-            }).catch((error) => {
+            }).catch(async (error) => {
                 console.log("ERR 2", error);
-                ctx.editMessageText("❗️ Bu to'lov tizimi vaqtinchalik ishlamayapti. Boshqa to'lov tizimidan foydalanishingiz mumkin!");
+                try {
+                    await ctx.editMessageCaption(langs.payTypeError[ctx.session.lang]);
+                } catch (error) {
+                    console.log(error);
+                };
             });
         } else {
-            await ctx.editMessageText(langs.tariffNotFound[ctx.session.lang]);
+            try {
+                await ctx.editMessageCaption(langs.tariffNotFound[ctx.session.lang]);
+            } catch (error) {
+                console.log(error);
+            };
         };
     } catch (error) {
         console.log(error);
@@ -100,8 +118,11 @@ scene.action(/^check_(.+)$/, async (ctx) => {
             } else throw "Not found";
         } else throw "Not found";
     } catch (error) {
-        console.log(error);
-        ctx.editMessageText("Transaction not found!");
+        try {
+            await ctx.editMessageCaption("Transaction not found!");
+        } catch (error) {
+            console.log(error);
+        };
     };
 });
 
