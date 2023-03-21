@@ -12,6 +12,7 @@ const stage = new Stage([
     require("../admin/scenes/productsAdd"),
     require("../admin/scenes/productsReview"),
     require("./enterPubgId"),
+    require("./products"),
     require("./main"),
     require("./lang"),
     require("./buy"),

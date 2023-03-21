@@ -1,4 +1,5 @@
 const { Markup } = require('telegraf');
+const langs = require('../../config/langs');
 
 exports.main = Markup.keyboard([
     ["🗂 Catalog", "🛍 Products"],
@@ -6,10 +7,10 @@ exports.main = Markup.keyboard([
     ["👤 Userga xabar"]
 ]).resize();
 
-exports.catalog = (categories, catalog) => {
+exports.catalog = (categories, catalog, lang) => {
     let extra = categories.map((item) => [item.name]);
-    if (catalog) extra.push(["➕ Qo'shish", "◀️ Orqaga"]);
-    else extra.push(["◀️ Orqaga"]);
+    if (catalog) extra.push(["➕ Qo'shish", langs.back[lang]]);
+    else extra.push([langs.back[lang]]);
     return Markup.keyboard(extra).resize();
 };
 

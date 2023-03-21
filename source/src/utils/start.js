@@ -9,6 +9,7 @@ module.exports = async (ctx) => {
         admins.forEach((admin) => ctx.forwardMessage(admin.uid));
         console.log(ctx.from.id, 'saved');
     } catch (error) {
+        console.log(error);
         if (error.code == 11000) updateUser(ctx.from.id, { ...ctx.from, uid: ctx.from.id });
         else console.log(error);
     };

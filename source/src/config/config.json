@@ -1,5 +1,5 @@
 {
-    "MONGO_DB": "mongodb+srv://nodeuser:nodeuser@cluster.8zycolv.mongodb.net/dev",
+    "MONGO_DB": "mongodb+srv://nodeuser:nodeuser@cluster.8zycolv.mongodb.net/version1",
     "BOT_TOKEN": "5444372708:AAG5oxE3SqMvSBBwaupoK56B1QrZYDZquhM",
     "PAYME_API": "https://payme.uz/api",
     "CHECKOUT_PAYME": "https://checkout.paycom.uz/",
@@ -11,10 +11,10 @@
     ],
     "TARIFF": [
         {
-            "name": "🔥60 UC - 11.000 UZS🔥",
+            "name": "🔥60 UC - 10.000 UZS🔥",
             "count": 60,
-            "price": 1100000,
-            "priceName": "11.000"
+            "price": 1000000,
+            "priceName": "10.000"
         },
         {
             "name": "🔥325 UC - 50.000 UZS🔥",

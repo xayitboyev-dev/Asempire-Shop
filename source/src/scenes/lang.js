@@ -8,8 +8,8 @@ scene.enter(async (ctx) => {
 
 scene.action(/^lang_(.+)$/, async (ctx) => {
     ctx.session.lang = ctx.match[1];
-    await ctx.deleteMessage();
-    await ctx.scene.enter("main");
+    ctx.deleteMessage();
+    ctx.scene.enter("main");
 });
 
 module.exports = scene; 

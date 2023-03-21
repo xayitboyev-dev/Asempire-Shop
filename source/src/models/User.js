@@ -41,7 +41,12 @@ const userSchema = new Schema({
             },
             count: {
                 type: Number,
-                required: true,
+            },
+            price: {
+                type: Number,
+            },
+            productId: {
+                type: String
             },
             name: {
                 type: String,
@@ -49,7 +54,6 @@ const userSchema = new Schema({
             },
             pubgId: {
                 type: Number,
-                default: true,
             },
         }
     ]
