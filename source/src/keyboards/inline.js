@@ -3,12 +3,12 @@ const langs = require("../config/langs");
 
 exports.review = (count, lang) => [
     [Markup.button.callback(langs.tariffReviewPay[lang]("PAYME"), "buyByPayme_" + count)],
-    [Markup.button.callback(langs.tariffReviewPay[lang]("UZUMBANK"), "buyByUzum_" + count)]
+    // [Markup.button.callback(langs.tariffReviewPay[lang]("UZUMBANK"), "buyByUzum_" + count)]
 ]
 
 exports.productPaymentType = (price, lang) => Markup.inlineKeyboard([
     [Markup.button.callback(langs.tariffReviewPay[lang]("PAYME"), "buyByPayme_" + price)],
-    [Markup.button.callback(langs.tariffReviewPay[lang]("UZUMBANK"), "buyByUzum_" + price)]
+    // [Markup.button.callback(langs.tariffReviewPay[lang]("UZUMBANK"), "buyByUzum_" + price)]
 ]).resize();
 
 exports.payment = (transaction, lang) => {

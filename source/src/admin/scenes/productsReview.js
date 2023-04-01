@@ -7,6 +7,7 @@ scene.enter(async (ctx) => {
     const { product } = ctx.scene.state;
     const mapped = product.details.map((item) => item.key + ": " + item.value);
     const joined = mapped.join("\n");
+    await ctx.replyWithPhoto({ url: product.image_link });
     await ctx.reply(`Nomi: ${product.name}\nNarxi: ${product.price}\nKategoriyasi: ${product.category}\n\nMa'lumotlari\n` + joined, catalogReview);
 });
 

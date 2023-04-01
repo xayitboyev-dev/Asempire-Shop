@@ -35,7 +35,7 @@ scene.command("language", (ctx) => ctx.scene.enter("lang"));
 
 scene.command("/admin", (ctx) => ctx.scene.enter("admin:main"));
 
-scene.hears(Object.values(langs.buyUc), (ctx) => ctx.scene.enter("enterPubgId"));
+scene.hears(Object.values(langs.buyUc), (ctx) => ctx.scene.enter("buy"));
 
 scene.on("text", async (ctx) => {
     try {

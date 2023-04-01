@@ -17,6 +17,14 @@ const path = require("path");
 
 scene.enter(async (ctx) => {
     try {
+        if (ctx.scene?.state?.tariff) {
+            const tariff = TARIFF.find((item) => item?.name == ctx.scene?.state?.tariff?.name);
+            if (tariff) {
+                await ctx.replyWithPhoto(Input.fromLocalFile(path.join(__dirname, "..", "assets", "uc.jpg"), "uc_logo"), { caption: langs.tariffReview[ctx.session.lang](tariff, ctx.session.pubgId), reply_markup: { inline_keyboard: review(tariff.count, ctx.session.lang), resize_keyboard: true } });
+            } else {
+                await ctx.reply(langs.tariffNotFound[ctx.session.lang]);
+            };
+        };
         await ctx.replyWithHTML(langs.enterTariff[ctx.session.lang], buy(ctx.session.lang));
     } catch (error) {
         console.log(error);
@@ -36,7 +44,7 @@ scene.on("text", async (ctx) => {
         const { text } = ctx.message;
         const tariff = TARIFF.find((item) => item.name === text);
         if (tariff) {
-            await ctx.replyWithPhoto(Input.fromLocalFile(path.join(__dirname, "..", "assets", "uc.jpg"), "uc_logo"), { caption: langs.tariffReview[ctx.session.lang](tariff, ctx.session.pubgId), reply_markup: { inline_keyboard: review(tariff.count, ctx.session.lang), resize_keyboard: true }, });
+            ctx.scene.enter("enterPubgId", { tariff });
         } else {
             await ctx.reply(langs.tariffNotFound[ctx.session.lang]);
         };

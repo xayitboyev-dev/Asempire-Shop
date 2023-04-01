@@ -3,7 +3,7 @@ const scene = new BaseScene('products');
 const { catalog } = require('../admin/keyboards/keyboard');
 const Product = require("../models/Product");
 const User = require("../models/User");
-const { productPaymentType, payment } = require("../keyboards/inline");
+const { review, payment } = require("../keyboards/inline");
 const langs = require('../config/langs');
 const paymePay = require("../utils/paymePay");
 const uzumPay = require("../utils/uzumPay");
@@ -40,20 +40,20 @@ scene.action(/^(buyByPayme_|buyByUzum_)(.+)$/, async (ctx) => {
                     const uuid = v4();
                     user.transactions.push({ uuid, payBy, name: product.name, productId: product.id, price: product.price, tid });
                     await user.save();
-                    await ctx.editMessageText(langs.productViewWaiting[ctx.session.lang](product, payBy.toUpperCase()), payment({
+                    await ctx.editMessageCaption(langs.productViewWaiting[ctx.session.lang](product, payBy.toUpperCase()), payment({
                         url: (payBy === "payme" ? CHECKOUT_PAYME : CHECKOUT_UZUM) + tid,
                         uuid
                     }, ctx.session.lang));
                 } catch (error) {
                     console.log("ERR 1", error);
-                    ctx.editMessageText(error);
+                    ctx.editMessageCaption(error);
                 };
             }).catch((error) => {
                 console.log("ERR 2", error);
-                ctx.editMessageText(langs.payTypeError[ctx.session.lang]);
+                ctx.editMessageCaption(langs.payTypeError[ctx.session.lang]);
             });
         } else {
-            await ctx.editMessageText(langs.tariffNotFound[ctx.session.lang]);
+            await ctx.editMessageCaption(langs.tariffNotFound[ctx.session.lang]);
         };
     } catch (error) {
         console.log(error);
@@ -73,8 +73,8 @@ scene.action(/^check_(.+)$/, async (ctx) => {
 
             async function success() {
                 try {
+                    await ctx.editMessageCaption(langs.productPaid[ctx.session.lang](product, transaction, details, new Date().toLocaleDateString()), { parse_mode: "HTML" });
                     await Product.findByIdAndDelete(product.id);
-                    await ctx.editMessageText(langs.productPaid[ctx.session.lang](product, transaction, details, new Date().toLocaleDateString()), { parse_mode: "HTML" });
                     ctx.scene.enter("products", { category: ctx.scene?.state?.category });
                 } catch (error) {
                     console.log(error);
@@ -95,7 +95,7 @@ scene.action(/^check_(.+)$/, async (ctx) => {
         } else throw "Not found";
     } catch (error) {
         console.log(error);
-        await ctx.editMessageText("Transaction error!");
+        await ctx.editMessageCaption("Transaction error!");
     };
 });
 
@@ -103,7 +103,7 @@ scene.on("text", async (ctx) => {
     const product = await Product.findOne({ name: ctx.message?.text });
 
     if (product) {
-        await ctx.reply(langs.productView[ctx.session.lang](product), productPaymentType(product.id, ctx.session.lang));
+        await ctx.replyWithPhoto({ url: product.image_link }, { caption: langs.productView[ctx.session.lang](product), reply_markup: { inline_keyboard: review(product.id, ctx.session.lang), resize_keyboard: true } });
     } else {
         await ctx.reply("Product topilmadi!");
     };

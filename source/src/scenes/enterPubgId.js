@@ -22,7 +22,7 @@ scene.enter(async (ctx) => {
             console.log(error);
         };
         try {
-            await ctx.replyWithPhoto(Input.fromLocalFile(path.join(__dirname, "..", "assets", "uc.jpg"), "uc_logo"), { caption: langs.welcome[ctx.session.lang] });
+            await ctx.replyWithPhoto(Input.fromLocalFile(path.join(__dirname, "..", "assets", "logo.png"), "uc_logo"), { caption: langs.welcome[ctx.session.lang] });
             await ctx.reply(langs.askPubdId[ctx.session.lang], history.length ? idHistory(history.reverse(), ctx.session.lang) : remove);
         } catch (error) {
             console.log(error);
@@ -41,7 +41,7 @@ scene.on("text", async (ctx) => {
             if (id.toString().length > 20) return await ctx.reply(langs.idErrorMaxLength[ctx.session.lang]);
             if (id.toString().length < 6) return await ctx.reply(langs.idErrorMinLength[ctx.session.lang]);
             ctx.session.pubgId = id;
-            await ctx.scene.enter("buy");
+            await ctx.scene.enter("buy", { tariff: ctx.scene?.state?.tariff });
         } else {
             await ctx.reply(langs.idErrorInvalid[ctx.session.lang]);
         };

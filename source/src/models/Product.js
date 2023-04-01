@@ -13,6 +13,10 @@ const productSchema = new Schema({
         type: String,
         required: true,
     },
+    image_link: {
+        type: String,
+        required: true
+    },
     details: [
         {
             key: {
